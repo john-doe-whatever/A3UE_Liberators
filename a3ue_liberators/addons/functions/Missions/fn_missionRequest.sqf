@@ -1,4 +1,4 @@
-#include "..\..\script_component.hpp"
+#include "..\script_component.hpp"
 FIX_LINE_NUMBERS()
 
 if(!isServer) exitWith { Error("Server-only function miscalled") };
@@ -168,14 +168,18 @@ switch (_type) do {
 		_possibleMarkers append _controlsX;
 
 		//append banks in hostile cities
-		if (random 100 < 20) then {
-			{
-				private _nearbyMarker = [markersX, getPos _x] call BIS_fnc_nearestPosition;
-				if (
-					(sidesX getVariable [_nearbyMarker,sideUnknown] != teamPlayer)
-					&& (getPos _x distance getMarkerPos respawnTeamPlayer < distanceMission)
-					) then {_possibleMarkers pushBack _x};
-			} forEach banks;
+		if (random 100 < 20) then 
+		{ 
+			{ 
+				private _nearbyMarker = [markersX, getPos _x] call BIS_fnc_nearestPosition; 
+				private _markerSide = sidesX getVariable [_nearbyMarker,sideUnknown]; 
+				if 
+				( 
+					_markerSide != teamPlayer && 
+					(areInvadersFriendly != 2 || _markerSide != Invaders) && 
+					(getPos _x distance getMarkerPos respawnTeamPlayer < distanceMission) 
+				) then {_possibleMarkers pushBack _x}; 
+			} forEach banks; 
 		};
 
 		if (_possibleMarkers isEqualTo []) then {
@@ -310,7 +314,11 @@ switch (_type) do {
 		{
 			private _site = _x;
 			if ((getMarkerPos _site) distance (getMarkerPos respawnTeamPlayer) > distanceMission) then {continue};
-			if (sidesX getVariable [_site, teamPlayer] == teamPlayer) then {continue};
+			private _siteSide = sidesX getVariable [_site, teamPlayer];
+			if (
+				_siteSide == teamPlayer ||
+				(areInvadersFriendly == 2 && _siteSide == Invaders)
+			) then {continue};
 			private _base = [_site, _possibleBases] call A3A_fnc_findBasesForConvoy;
 			if (_base != "") then {
 				_possibleMarkers pushBack _site;

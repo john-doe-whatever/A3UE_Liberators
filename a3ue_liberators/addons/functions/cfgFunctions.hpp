@@ -17,6 +17,17 @@ class CfgFunctions
                 file = QPATHTOFOLDER(OrgPlayers\fn_tierCheck.sqf);
             };
         };
+        class Missions
+        {
+            class findIfNearAndHostile
+            {
+                file = QPATHTOFOLDER(Missions\fn_findIfNearAndHostile.sqf);
+            };
+            class missionRequest
+            {
+                file = QPATHTOFOLDER(Missions\fn_missionRequest.sqf);
+            };
+        };
     };
     class ADDON 
     {
