@@ -16,20 +16,18 @@ Extender parameters -> REB and INV vs GOV mode = On
 - Invaders don't launch scripted attacks toward rebels
 - GOV/INV attacks within specified distance from player/HQ are "real"
 - Adjustable influence of INV map control on War Level
-
-Not implemented:
-- Victory conditions
-- Preventing Petros from giving missions against INV
+- Petros doesn't give missions against INV
+- Victory conditions take map control by INV into account
 ## Details
 Changes:
 - functions\Base\fn_chooseAttack.sqf (modified): ignoring rebel attack targets
 - functions\Liberators\fn_initLiberators.sqf (added): makes INV friends with REB and vice versa after server init
 - functions\OrgPlayers\fn_tierCheck.sqf (modified): takes into account INV-controlled zones when calculating War Level
+- functions\Missions\fn_findIfNearAndHostile.sqf; functions\Missions\fn_missionRequest.sqf (modified): prevent Petros from giving missions against INV
+- functions\Base\fn_checkWinCondition.sqf (modified): add new win conditions
 - core\Params.hpp, core\Stringtable.xml: Adds extender parameters
 
 
 Playing with Rival Rebels not recommended (automatically turned off when enabling the extender, but not prohibited) - probably leads to RR units being friendly, but not to stopping their scripted attacks.
 
-Don't expect the extender to be supported, updated, developed or fixed, or issues to be answered. Consider it abandoned.
-
-Compatible with: Antistasi Ultimate v12.0.3
+Confirmed to be compatible with: Antistasi Ultimate v12.0.3
