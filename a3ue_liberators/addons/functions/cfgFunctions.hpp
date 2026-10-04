@@ -9,6 +9,10 @@ class CfgFunctions
             {
                 file = QPATHTOFOLDER(Base\fn_chooseAttack.sqf);
             };
+            class  checkWinCondition
+            {
+                file = QPATHTOFOLDER(Base\fn_checkWinCondition.sqf);
+            };
         };
         class OrgPlayers
         {

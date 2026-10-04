@@ -1,9 +1,10 @@
-#include "..\..\script_component.hpp"
+#include "..\script_component.hpp"
 FIX_LINE_NUMBERS()
 
 private _factionMoney = server getVariable ["resourcesFIA",0];
 private _hr = server getVariable ["hr",0];
 private _victoryZones = airportsX + milbases + outposts + resourcesX + factories + seaports;
+private _militaryZones = airportsX + milbases + outposts + seaports;
 private _victoryZonesLogistical = airportsX + milbases + seaports;
 private _popTotal = 0;
 private _popReb = 0;
@@ -44,62 +45,115 @@ private _milbasesOwned = ({sidesX getVariable [_x,sideUnknown] isEqualTo teamPla
 private _airportsTotal = count (airportsX);
 private _airportsOwned = ({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (airportsX));
 
-switch (victoryCondition) do
+if (areInvadersFriendly == 2) then
 {
-    //Normal Victory
-    case 0:
+    switch (liberatorsVictoryCondition) do
     {
-        if ((_popReb > _popGov) && {({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (airportsX + milbases)) isEqualTo count (airportsX + milbases)}) then {
-            isNil {["ended", true] call A3A_fnc_writebackSaveVar};
-            ["End1",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
-        } else {
-            isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_normal"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_normal_victory_info", (round _popReb),(round _popGov),_milbasesOwned,_milbasesTotal,_airportsOwned,_airportsTotal], true] call A3A_fnc_customHint };
+        //Normal Victory
+        case 0:
+        {
+            if (
+                ({
+                    private _owner = sidesX getVariable [_x, sideUnknown];
+                    (_owner isEqualTo teamPlayer) || (_owner isEqualTo Invaders)
+                } count _victoryZonesLogistical)
+                isEqualTo count _victoryZonesLogistical
+            ) then
+            {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["End1",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            };
+        };
+        //Military Control
+        case 1:
+        {
+            if (
+                ({
+                    private _owner = sidesX getVariable [_x, sideUnknown];
+                    (_owner isEqualTo teamPlayer) || (_owner isEqualTo Invaders)
+                } count _militaryZones)
+                isEqualTo count _militaryZones
+            ) then
+            {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["End1",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            };
+        };
+        //Total sweep-up
+        case 2:
+        {
+            if (
+                ({
+                    private _owner = sidesX getVariable [_x, sideUnknown];
+                    (_owner isEqualTo teamPlayer) || (_owner isEqualTo Invaders)
+                } count _victoryZones)
+                isEqualTo count _victoryZones
+            ) then
+            {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["End1",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            };
         };
     };
-
-    //Total Victory
-    case 1:
+} else
+{
+    switch (victoryCondition) do
     {
-        if ((_popReb > _popGov) && {({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (_victoryZones)) isEqualTo count (_victoryZones)}) then {
-            isNil {["ended", true] call A3A_fnc_writebackSaveVar};
-            ["totalVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
-        } else {
-            isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_total"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_total_victory_info", (round _popReb),(round _popGov),_resourcesOwned,_resourcesTotal,_factoriesOwned,_factoriesTotal,_outpostsOwned,_outpostsTotal,_seaportsOwned,_seaportsTotal,_milbasesOwned,_milbasesTotal,_airportsOwned,_airportsTotal], true] call A3A_fnc_customHint };
+        //Normal Victory
+        case 0:
+        {
+            if ((_popReb > _popGov) && {({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (airportsX + milbases)) isEqualTo count (airportsX + milbases)}) then {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["End1",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            } else {
+                isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_normal"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_normal_victory_info", (round _popReb),(round _popGov),_milbasesOwned,_milbasesTotal,_airportsOwned,_airportsTotal], true] call A3A_fnc_customHint };
+            };
         };
-    };
 
-    //Economic Victory
-    case 2:
-    {
-        if (_factionMoney >= _economicCalculation) then {
-            isNil {["ended", true] call A3A_fnc_writebackSaveVar};
-            ["economicVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
-        } else {
-            isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_economic"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_missing_money", _missingMoney, A3A_faction_civ get "currencySymbol"], true] call A3A_fnc_customHint };
+        //Total Victory
+        case 1:
+        {
+            if ((_popReb > _popGov) && {({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (_victoryZones)) isEqualTo count (_victoryZones)}) then {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["totalVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            } else {
+                isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_total"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_total_victory_info", (round _popReb),(round _popGov),_resourcesOwned,_resourcesTotal,_factoriesOwned,_factoriesTotal,_outpostsOwned,_outpostsTotal,_seaportsOwned,_seaportsTotal,_milbasesOwned,_milbasesTotal,_airportsOwned,_airportsTotal], true] call A3A_fnc_customHint };
+            };
         };
-    };
 
-    //Logistical Victory
-    case 3:
-    {
-        if (({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (_victoryZonesLogistical) ) isEqualTo count (_victoryZonesLogistical)) then {
-            isNil { ["ended", true] call A3A_fnc_writebackSaveVar };
-            ["logisticalVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
-        } else {
-            isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_logistical"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_logistical_victory_info",_seaportsOwned,_seaportsTotal,_milbasesOwned,_milbasesTotal,_airportsOwned,_airportsTotal], true] call A3A_fnc_customHint };
+        //Economic Victory
+        case 2:
+        {
+            if (_factionMoney >= _economicCalculation) then {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["economicVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            } else {
+                isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_economic"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_missing_money", _missingMoney, A3A_faction_civ get "currencySymbol"], true] call A3A_fnc_customHint };
+            };
         };
-    };
 
-    //Political Victory (Over 75% population Support)
-    case 4:
-    { 
-        if (_popReb >= _popMajority) then {
-            isNil {["ended", true] call A3A_fnc_writebackSaveVar};
-            ["politicalVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
-        } else {
-            isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_political"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_missing_support",_popTotal,(round _popGov),(round _popReb)], true] call A3A_fnc_customHint };
+        //Logistical Victory
+        case 3:
+        {
+            if (({sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (_victoryZonesLogistical) ) isEqualTo count (_victoryZonesLogistical)) then {
+                isNil { ["ended", true] call A3A_fnc_writebackSaveVar };
+                ["logisticalVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            } else {
+                isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_logistical"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_logistical_victory_info",_seaportsOwned,_seaportsTotal,_milbasesOwned,_milbasesTotal,_airportsOwned,_airportsTotal], true] call A3A_fnc_customHint };
+            };
         };
-    };
 
-    default {Error_1("Victory condition was not recognized. Condition given: %1", victoryCondition)};
+        //Political Victory (Over 75% population Support)
+        case 4:
+        { 
+            if (_popReb >= _popMajority) then {
+                isNil {["ended", true] call A3A_fnc_writebackSaveVar};
+                ["politicalVictory",true,true,true,true] remoteExec ["BIS_fnc_endMission"];
+            } else {
+                isNil { [format [localize "STR_A3AU_victory_condition_check" + localize "STR_A3AU_victory_type_political"],format [localize "STR_A3AU_victory_condition_not_met" + localize "STR_A3AU_victory_condition_missing_support",_popTotal,(round _popGov),(round _popReb)], true] call A3A_fnc_customHint };
+            };
+        };
+
+        default {Error_1("Victory condition was not recognized. Condition given: %1", victoryCondition)};
+    };
 };
