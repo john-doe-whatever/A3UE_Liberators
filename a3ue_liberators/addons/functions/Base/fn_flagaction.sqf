@@ -265,7 +265,7 @@ switch _typeX do
                         _flagPosATL inArea _x
                     } param [0, ""];
                     [_marker, Invaders] remoteExec ["a3ue_liberators_functions_fnc_handOverMarker", 2];
-                },nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4
+                },nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (_this == theBoss)",4
             ];
         };
         [_flag] call HR_GRG_fnc_initGarage;
