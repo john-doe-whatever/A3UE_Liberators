@@ -13,6 +13,10 @@ class CfgFunctions
             {
                 file = QPATHTOFOLDER(Base\fn_checkWinCondition.sqf);
             };
+            class flagaction
+            {
+                file = QPATHTOFOLDER(Base\fn_flagaction.sqf);
+            };
         };
         class OrgPlayers
         {
@@ -42,6 +46,7 @@ class CfgFunctions
             {
                 postInit = 1;
             };
+            class handOverMarker {};
         };
     };
 };

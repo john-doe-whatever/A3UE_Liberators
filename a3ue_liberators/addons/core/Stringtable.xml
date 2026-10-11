@@ -52,5 +52,11 @@
         <Key ID="STR_params_liberatorsVictoryCondition_2">
             <Original>Total sweep-up</Original>
         </Key>
+        <Key ID="STR_antistasi_actions_hand_over_marker_inv">
+                <Original>Hand over to Liberators</Original>
+        </Key>
+        <Key ID="STR_antistasi_actions_hand_over_marker_distance_check_failure">
+            <Original>You can't hand over markers while there are enemies near you.</Original>
+        </Key>
     </Package>
 </Project>
