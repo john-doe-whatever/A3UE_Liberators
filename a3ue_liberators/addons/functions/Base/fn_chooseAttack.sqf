@@ -78,6 +78,7 @@ Debug("Final target choice list:");
 
 // Cull anything worse than 10:1 value ratio, otherwise we'll launch some really stupid attacks occasionally
 private _arePunishmentsAllowed = ((enablePunishments isEqualTo 1) && (tierWar >= A3U_setting_tierWarPunishments));
+private _areOccupantPunishmentsAllowed = ((enableOccupantPunishments isEqualTo 1) && (tierWar >= A3U_setting_tierWarPunishments));
 
 Info("Logging available targets: Original, Culled");
 InfoArray("Original Targets:", _targets);
@@ -119,10 +120,19 @@ if (_targetMrk in citiesX) exitWith {
         bigAttackInProgress = true; publicVariable "bigAttackInProgress";
         [_targetMrk, _originMrk] spawn A3A_fnc_invaderPunish;
     } else {
-        // Supply convoy, unsimulated
-        Info_2("Sending supply convoy from %1 to %2", _originMrk, _targetMrk);
-        [-200, _side, "attack"] call A3A_fnc_addEnemyResources;
-        [[_targetMrk, _originMrk, "Supplies", "attack"],"A3A_fnc_convoy"] call A3A_fnc_scheduler;
+        if (_side isEqualTo Occupants && _areOccupantPunishmentsAllowed && {random 100 < occupantPunishmentChance}) then {
+            // Punishment, unsimulated
+            Info_2("Starting punishment mission from %1 to %2", _originMrk, _targetMrk);
+            [-400, _side, "attack"] call A3A_fnc_addEnemyResources;
+            bigAttackInProgress = true; publicVariable "bigAttackInProgress";
+            [_targetMrk, _originMrk] spawn a3ue_liberators_functions_fnc_occupantPunish;
+        }
+        else {
+            // Supply convoy, unsimulated
+            Info_2("Sending supply convoy from %1 to %2", _originMrk, _targetMrk);
+            [-200, _side, "attack"] call A3A_fnc_addEnemyResources;
+            [[_targetMrk, _originMrk, "Supplies", "attack"],"A3A_fnc_convoy"] call A3A_fnc_scheduler;
+        };
     };
     Info_3("Resources for: %1. | Attack: %2 | Defence: %3 |", _side, _resourcesAttackSide, _resourcesDefenceSide);
     true;

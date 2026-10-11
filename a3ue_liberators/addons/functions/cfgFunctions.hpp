@@ -47,6 +47,7 @@ class CfgFunctions
                 postInit = 1;
             };
             class handOverMarker {};
+            class occupantPunish {};
         };
     };
 };

@@ -58,5 +58,36 @@
         <Key ID="STR_antistasi_actions_hand_over_marker_distance_check_failure">
             <Original>You can't hand over markers while there are enemies near you.</Original>
         </Key>
+
+        <Key ID="STR_params_enableOccupantPunishments_title">
+            <Original>Enable Occupier punishments</Original>
+        </Key>
+        <Key ID="STR_params_enableOccupantPunishments_desc">
+            <Original>If enabled, occupiers will attack a rebel town instead of sending a convoy with specified chance.</Original>
+        </Key>
+
+        <Key ID="STR_params_occupantPunishmentChance_title">
+            <Original>Occupant punishment chance</Original>
+        </Key>
+        <Key ID="STR_params_occupantPunishmentChance_desc">
+            <Original>If occupier punishments are enabled, occupiers will attack a rebel town instead of sending a convoy with specified chance.</Original>
+        </Key>
+
+        <Key ID="STR_occupantPunish_task">
+            <Original>%1 Punishment</Original>
+            <Russian>Кара %1</Russian>
+            <Chinesesimp>%1 屠杀</Chinesesimp>
+            <Korean>%1의 학살</Korean>
+            <French>%1 Punition</French>
+            <Turkish>%1 Cezalandırması</Turkish>
+        </Key>
+        <Key ID="STR_occupantPunish_desc">
+            <Original>%2 is attacking critical positions within %1! Defend the city at all costs.</Original>
+            <Russian>%2 атакуют критические позиции внутри %1! Защитие город любой ценой.</Russian>
+            <Chinesesimp>%2 正在攻击 %1 内的关键位置！ 不惜一切代价保卫城市。</Chinesesimp>
+            <Korean>%2이 %1 내의 중요한 위치를 공격하고 있습니다! 수단과 방법을 가리지 말고 도시를 지켜내십시오.</Korean>
+            <French>%2 attaque des positions critiques à l'intérieur de %1 ! Défendez la ville à tout prix.</French>
+            <Turkish>%2, %1 içerisindeki kritik mevzilere saldırıyor! Şehri ne pahasına olursa olsun savunun.</Turkish>
+        </Key>
     </Package>
 </Project>

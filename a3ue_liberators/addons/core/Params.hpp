@@ -73,6 +73,25 @@ class Params
         lockOnSave = 0;
         lockInGame = 0;
     };
+    class enableOccupantPunishments: ExtenderParams
+    {
+        title = $STR_params_enableOccupantPunishments_title;
+        tooltip = $STR_params_enableOccupantPunishments_desc;
+        values[] = {1,0};
+        texts[] = {$STR_params_afk_enabled, $STR_params_afk_disabled};
+        default = 0;
+        lockOnSave = 0;
+        lockInGame = 0;
+    };
 
-    class LiberatorsSpacer : AllParams {};
+    class occupantPunishmentChance: ExtenderParams
+    {
+        title = $STR_params_occupantPunishmentChance_title;
+        tooltip = $STR_params_occupantPunishmentChance_desc;
+        values[] = {0,25,50,75,100};
+        texts[] = {"0","0.25","0.5","0.75","1"};
+        default = 50;
+        lockOnSave = 0;
+        lockInGame = 0;
+    };
 };
