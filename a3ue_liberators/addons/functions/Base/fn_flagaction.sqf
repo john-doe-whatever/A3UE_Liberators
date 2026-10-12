@@ -255,8 +255,15 @@ switch _typeX do
             },nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4
         ];
         if (areInvadersFriendly == 2) then {
-            _flag addAction [
+            [
+                _flag,
                 format [localize "STR_antistasi_actions_hand_over_marker_inv"],
+                "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa",
+                "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa",
+                "isPlayer _this && {_this == (_this getVariable ['owner', objNull])} && {_this == theBoss}",
+                "isPlayer _this && {_this == (_this getVariable ['owner', objNull])} && {_this == theBoss}",
+                {},
+                {},
                 {
                     params ["_flag", "_caller", "_actionId", "_arguments"];
                     private _flagPosATL = getPosATL _flag;
@@ -265,8 +272,8 @@ switch _typeX do
                         _flagPosATL inArea _x
                     } param [0, ""];
                     [_marker, Invaders] remoteExec ["a3ue_liberators_functions_fnc_handOverMarker", 2];
-                },nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (_this == theBoss)",4
-            ];
+                }, {}, [], 2, 0, false, false
+            ] call BIS_fnc_holdActionAdd;
         };
         [_flag] call HR_GRG_fnc_initGarage;
     };
