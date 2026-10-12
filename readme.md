@@ -12,15 +12,21 @@ In Arma 3 Launcher: Mods -> Local Mod -> Choose the extracted folder -> Load the
 ## Usage
 Extender parameters -> REB and INV vs GOV mode = On
 ## Features
+### Liberators Mode
 - Invader units don't attack rebel units and vice versa
 - Invaders don't launch scripted attacks toward rebels
-- GOV/INV attacks within specified distance from player/HQ are "real"
 - Adjustable influence of INV map control on War Level
 - Petros doesn't give missions against INV
 - Victory conditions take map control by INV into account
+- Commander can hand over bases to INV via flag context menu
+### Additional common parameters
+- GOV/INV attacks within specified distance from player/HQ are "real"
+- Occupant punishments can be enabled with adjustable chance of starting instead of an Occupant supply convoy
+
+
 ## Details
 Changes:
-- functions\Base\fn_chooseAttack.sqf (modified): ignoring rebel attack targets
+- functions\Base\fn_chooseAttack.sqf (modified): ignoring rebel attack targets, enabling occupant punishments
 - functions\Liberators\fn_initLiberators.sqf (added): makes INV friends with REB and vice versa after server init
 - functions\OrgPlayers\fn_tierCheck.sqf (modified): takes into account INV-controlled zones when calculating War Level
 - functions\Missions\fn_findIfNearAndHostile.sqf; functions\Missions\fn_missionRequest.sqf (modified): prevent Petros from giving missions against INV
