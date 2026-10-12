@@ -5,6 +5,14 @@ class Params
 {
     class AllParams; // this line is aboslutely necessary
     class ExtenderParams; // this line is aboslutely necessary
+
+    class liberatorsSpecificParams: ExtenderParams // this class is the base class for all of your params
+    {
+        title = "[A3UE] Liberators: Liberators Mode Parameters";
+        values[] = {0};
+        texts[] = {""};
+        default = 0;
+    };
     
     class areInvadersFriendly: ExtenderParams
     {
@@ -31,26 +39,6 @@ class Params
             };
         };
     };
-    class govInvFightSimulationDistancePlayer: ExtenderParams
-    {
-        title = $STR_params_govInvFightSimulationDistancePlayer_title;
-        tooltip = $STR_params_govInvFightSimulationDistancePlayer_desc;
-        values[] = {1000,2000,3000,4000,5000,6000,7000,8000,9000,10000};
-        texts[] = {"1000","2000","3000","4000","5000","6000","7000","8000","9000","10000"};
-        default = 3000;
-        lockOnSave = 0;
-        lockInGame = 0;
-    };
-    class govInvFightSimulationDistanceHq: ExtenderParams
-    {
-        title = $STR_params_govInvFightSimulationDistanceHq_title;
-        tooltip = $STR_params_govInvFightSimulationDistanceHq_desc;
-        values[] = {1000,2000,3000,4000,5000,6000,7000,8000,9000,10000};
-        texts[] = {"1000","2000","3000","4000","5000","6000","7000","8000","9000","10000"};
-        default = 3000;
-        lockOnSave = 0;
-        lockInGame = 0;
-    };
 
     class liberatorsWarLevelCoef: ExtenderParams
     {
@@ -73,6 +61,45 @@ class Params
         lockOnSave = 0;
         lockInGame = 0;
     };
+
+    class liberatorsSpecificParamsSpacer: ExtenderParams
+    {
+        title = "";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
+    };
+
+
+    class liberatorsAdditionalCommonParams: ExtenderParams
+    {
+        title = "[A3UE] Liberators: Additional Common Parameters";
+        values[] = {0};
+        texts[] = {""};
+        default = 0;
+    };
+
+    class govInvFightSimulationDistancePlayer: ExtenderParams
+    {
+        title = $STR_params_govInvFightSimulationDistancePlayer_title;
+        tooltip = $STR_params_govInvFightSimulationDistancePlayer_desc;
+        values[] = {1000,2000,3000,4000,5000,6000,7000,8000,9000,10000};
+        texts[] = {"1000","2000","3000","4000","5000","6000","7000","8000","9000","10000"};
+        default = 3000;
+        lockOnSave = 0;
+        lockInGame = 0;
+    };
+    class govInvFightSimulationDistanceHq: ExtenderParams
+    {
+        title = $STR_params_govInvFightSimulationDistanceHq_title;
+        tooltip = $STR_params_govInvFightSimulationDistanceHq_desc;
+        values[] = {1000,2000,3000,4000,5000,6000,7000,8000,9000,10000};
+        texts[] = {"1000","2000","3000","4000","5000","6000","7000","8000","9000","10000"};
+        default = 3000;
+        lockOnSave = 0;
+        lockInGame = 0;
+    };
+
     class enableOccupantPunishments: ExtenderParams
     {
         title = $STR_params_enableOccupantPunishments_title;
@@ -93,5 +120,13 @@ class Params
         default = 50;
         lockOnSave = 0;
         lockInGame = 0;
+    };
+
+    class liberatorsCommonParamsSpacer: ExtenderParams // this class is the base class for all of your params
+    {
+        title = "";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
     };
 };

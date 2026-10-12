@@ -149,14 +149,13 @@ if (_targetMrk == "Synd_HQ") exitWith {
 
 // Otherwise it's a major attack. Then we need to decide whether to simulate:
 if(
-    (spawner getVariable _targetMrk) != 2 || (sidesX getVariable _targetMrk) == teamPlayer || 
-    (
-        areInvadersFriendly == 2 && 
-        (
-            (player distance2D (markerPos _targetMrk)) <= govInvFightSimulationDistancePlayer || 
-            ((markerPos respawnTeamPlayer) distance2D (markerPos _targetMrk)) <= govInvFightSimulationDistanceHq
-        )
-    )
+    (spawner getVariable _targetMrk) != 2 || 
+    (sidesX getVariable _targetMrk) == teamPlayer || 
+    (allPlayers findIf {
+        isPlayer _x &&
+        {_x distance2D (markerPos _targetMrk) <= govInvFightSimulationDistancePlayer}
+    }) != -1  || 
+    ((markerPos respawnTeamPlayer) distance2D (markerPos _targetMrk)) <= govInvFightSimulationDistanceHq
 ) then
 {
     // Sending real attack, execute the fight
