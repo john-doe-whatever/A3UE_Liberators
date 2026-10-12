@@ -31,6 +31,9 @@ Changes:
 - functions\OrgPlayers\fn_tierCheck.sqf (modified): takes into account INV-controlled zones when calculating War Level
 - functions\Missions\fn_findIfNearAndHostile.sqf; functions\Missions\fn_missionRequest.sqf (modified): prevent Petros from giving missions against INV
 - functions\Base\fn_checkWinCondition.sqf (modified): add new win conditions
+- functions\Base\fn_flagaction.sqf: add "Hand over to Liberators" flag action
+- functions\Liberators\fn_handOverMarker.sqf: hand over a marker to a side
+- functions\Liberators\fn_occupantPunish.sqf: "mirrored" invaderPunish function for Occupants
 - core\Params.hpp, core\Stringtable.xml: Adds extender parameters
 
 
