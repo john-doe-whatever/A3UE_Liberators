@@ -5,7 +5,7 @@
             <Original>REB and INV vs GOV mode</Original>
         </Key>
         <Key ID="STR_params_are_invaders_friendly_desc">
-            <Original>If enabled, Invaders fight alongside rebels against Occupiers. Enabling this with Rivals on may lead to unforseen consequences.</Original>
+            <Original>If enabled, Invaders fight alongside rebels against Occupiers.</Original>
         </Key>
         <Key ID="STR_params_are_invaders_friendly_1">
             <Original>Off</Original>
